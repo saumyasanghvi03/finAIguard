@@ -117,8 +117,7 @@ if clicked:
         return f"{float(x):,.2f}"
     except Exception:
         return "N/A"
-
-st.markdown(
+        st.markdown(
     "<div class='zn-box' style='display:flex;flex-wrap:wrap;gap:1.1em;align-items:center;'>"
     "🌐 <b>Market prices loaded:</b> "
     + " ".join([
