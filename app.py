@@ -51,7 +51,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# Navigation & Intro
+# Sidebar
 st.sidebar.header("✦ finAIguard – Settings")
 cmc_api_key = st.sidebar.text_input("Your CoinMarketCap API Key", type="password")
 crypto_symbols = st.sidebar.text_input("🪙 Crypto (comma-separated, e.g. BTC, ETH, DOGE)", "BTC,ETH")
@@ -77,15 +77,19 @@ def isnumber_finite(x):
     except Exception:
         return False
 
+def fmt_price(x):
+    try:
+        return f"{float(x):,.2f}"
+    except Exception:
+        return "N/A"
+
 st.markdown("## 💡 <b>How it works:</b>", unsafe_allow_html=True)
-st.markdown(
-    """
-    1. 👾 Enter your crypto and/or stock symbols (any, as many as you like).
-    2. 🤖 Click **Check Market Compliance & Fraud (Live)**.
-    3. 🔳 Get instant dashboard + blockchain hashes for flagged trades.
-    4. 🟦 **GenZ Tip:** Connect your web wallet to log flagged trades as POAP/Proof NFT (coming soon!).
-    """
-)
+st.markdown("""
+1. 👾 Enter your crypto and/or stock symbols (any, as many as you like).
+2. 🤖 Click **Check Market Compliance & Fraud (Live)**.
+3. 🔳 Get instant dashboard + blockchain hashes for flagged trades.
+4. 🟦 **GenZ Tip:** Connect your web wallet to log flagged trades as POAP/Proof NFT (coming soon!).
+""")
 
 clicked = st.button("🧠 Check Market Compliance & Fraud (Live)")
 if clicked:
@@ -112,23 +116,18 @@ if clicked:
         st.markdown(f"<div class='warning'>No valid symbols/data. Are markets open? Typo in names? API working?</div>", unsafe_allow_html=True)
         st.stop()
 
-    def fmt_price(x):
-    try:
-        return f"{float(x):,.2f}"
-    except Exception:
-        return "N/A"
-        st.markdown(
-    "<div class='zn-box' style='display:flex;flex-wrap:wrap;gap:1.1em;align-items:center;'>"
-    "🌐 <b>Market prices loaded:</b> "
-    + " ".join([
-        f"<span style='display:inline-block;margin:0 0.8em 0 0;vertical-align:middle;font-size:1.10em;'><b>{s}</b> "
-        + (f"<span style='color:{safe};font-weight:700;'>🟩 ${fmt_price(live_quotes[s])}</span>" if isnumber_finite(live_quotes[s]) else "<span style='color:red;font-weight:700;'>unavailable</span>")
-        + "</span>"
-        for s in usable_symbols
-    ])
-    + "</div>",
-    unsafe_allow_html=True
-)
+    st.markdown(
+        "<div class='zn-box' style='display:flex;flex-wrap:wrap;gap:1.1em;align-items:center;'>"
+        "🌐 <b>Market prices loaded:</b> "
+        + " ".join([
+            f"<span style='display:inline-block;margin:0 0.8em 0 0;vertical-align:middle;font-size:1.10em;'><b>{s}</b> "
+            + (f"<span style='color:{safe};font-weight:700;'>🟩 ${fmt_price(live_quotes[s])}</span>" if isnumber_finite(live_quotes[s]) else "<span style='color:red;font-weight:700;'>unavailable</span>")
+            + "</span>"
+            for s in usable_symbols
+        ])
+        + "</div>",
+        unsafe_allow_html=True
+    )
 
     # Simulate Trades
     np.random.seed(1)
@@ -200,4 +199,3 @@ if clicked:
     st.plotly_chart(fig, use_container_width=True)
 else:
     st.info("Set your symbols & Key and click the button for real-time Web3 risk/compliance.")
-
