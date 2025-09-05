@@ -53,12 +53,14 @@ if st.button("Check Market Compliance & Fraud (Live)"):
         data = yf.download(sym, period="1d", interval="1m")
         price = data['Close'].dropna().iloc[-1] if not data.empty and not data['Close'].empty else np.nan
         live_quotes[sym] = price
-
-    def isnumber_finite(x):
+        def isnumber_finite(x):
     try:
         return np.isfinite(float(x))
     except Exception:
         return False
+
+usable_symbols = [s for s in live_quotes if isnumber_finite(live_quotes[s])]
+
 
 usable_symbols = [s for s in live_quotes if isnumber_finite(live_quotes[s])]
 
