@@ -54,7 +54,14 @@ if st.button("Check Market Compliance & Fraud (Live)"):
         price = data['Close'].dropna().iloc[-1] if not data.empty and not data['Close'].empty else np.nan
         live_quotes[sym] = price
 
-    usable_symbols = [s for s in live_quotes if not np.isnan(live_quotes[s])]
+    def isnumber_finite(x):
+    try:
+        return np.isfinite(float(x))
+    except Exception:
+        return False
+
+usable_symbols = [s for s in live_quotes if isnumber_finite(live_quotes[s])]
+
     if not usable_symbols:
         st.error("No current prices available! (market closed, bad symbol, or API problem)")
         st.stop()
