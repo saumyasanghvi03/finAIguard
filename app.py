@@ -84,10 +84,10 @@ def fmt_price(x):
 
 st.markdown("## 💡 <b>How it works:</b>", unsafe_allow_html=True)
 st.markdown("""
-1.  Enter your crypto and/or stock symbols (any, as many as you like).
-2. 🤖 Click **Check Market Compliance & Fraud (Live)**.
-3. 🔳 Get instant dashboard + blockchain hashes for flagged trades.
-4. 🟦 **GenZ Tip:** Connect your web wallet to log flagged trades as POAP/Proof NFT (coming soon!).
+1. Enter your crypto and/or stock symbols (any, as many as you like).
+2. Click **Check Market Compliance & Fraud (Live)**.
+3. Get instant dashboard + blockchain hashes for flagged trades.
+4. **GenZ Tip:** Connect your web wallet to log flagged trades as POAP/Proof NFT (coming soon!).
 """)
 
 clicked = st.button("🧠 Check Market Compliance & Fraud (Live)")
