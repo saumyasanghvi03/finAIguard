@@ -112,11 +112,24 @@ if clicked:
         st.markdown(f"<div class='warning'>No valid symbols/data. Are markets open? Typo in names? API working?</div>", unsafe_allow_html=True)
         st.stop()
 
-    st.markdown("<div class='zn-box'>🌐 <b>Market prices loaded:</b> "
-                + " &bull; ".join([
-                    f"<span style='font-size:1.1em;'>{s}</span> " +
-                    (f" <span style='color:{safe};'>🟩 ${live_quotes[s]:.2f}</span>" if isnumber_finite(live_quotes[s]) else "<span style='color:red'>unavailable</span>")
-                    for s in usable_symbols])+"</div>", unsafe_allow_html=True)
+    def fmt_price(x):
+    try:
+        return f"{float(x):,.2f}"
+    except Exception:
+        return "N/A"
+
+st.markdown(
+    "<div class='zn-box' style='display:flex;flex-wrap:wrap;gap:1.1em;align-items:center;'>"
+    "🌐 <b>Market prices loaded:</b> "
+    + " ".join([
+        f"<span style='display:inline-block;margin:0 0.8em 0 0;vertical-align:middle;font-size:1.10em;'><b>{s}</b> "
+        + (f"<span style='color:{safe};font-weight:700;'>🟩 ${fmt_price(live_quotes[s])}</span>" if isnumber_finite(live_quotes[s]) else "<span style='color:red;font-weight:700;'>unavailable</span>")
+        + "</span>"
+        for s in usable_symbols
+    ])
+    + "</div>",
+    unsafe_allow_html=True
+)
 
     # Simulate Trades
     np.random.seed(1)
