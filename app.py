@@ -95,9 +95,15 @@ if st.button("Check Market Compliance & Fraud (Live)"):
             compliance_breach = value > 10000 or leverage > 10
             fraud_flag = order_type in ["LIMIT_SELL", "STOP_LOSS"] and value > 15000
             risk_score = int(compliance_breach) + int(fraud_flag)
-            hash_val = hashlib.sha256(str({"symbol": symbol, "price": price, "amount": amount, "time": now-i}).encode()).hexdigest()[:12] if risk_score >= 2 else ""
+            timestamp = now - timedelta(minutes=n_transactions - i)
+            hash_val = hashlib.sha256(str({
+                "symbol": symbol,
+                "price": price,
+                "amount": amount,
+                "time": timestamp.isoformat()
+            }).encode()).hexdigest()[:12] if risk_score >= 2 else ""
             tx_data.append({
-                "timestamp": now - timedelta(minutes=n_transactions-i),
+                "timestamp": timestamp,
                 "symbol": symbol,
                 "order_type": order_type,
                 "amount": round(amount, 2),
