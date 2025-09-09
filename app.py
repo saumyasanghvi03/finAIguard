@@ -60,13 +60,17 @@ st.set_page_config(
 
 # Web3 Banner
 st.markdown(
-f""".bigfont {{
-    font-size: 2.3rem !important;
-    font-weight: 800;
-    color: {primary};
-    letter-spacing: -1px;
-}}
-.web3-gradient {{
-    background: {web3_gradient};
-    padding: 2.2rem 0;
-    border-radius: 1.35rem;
+f"""
+<div class="web3-gradient">
+    <span class="bigfont" style="color: #000000;">finAIguard 🔮</span> — <span style="font-size:1.3em;">Bridging Web3 🚀 & TradFi 🏦 with AI-powered Compliance & Fraud Detection</span><br/>
+    <span style="color: #F9D923; font-size:1.08em;">GenZ Ready. DeFi Native. Market Secure.</span>
+</div>
+""", unsafe_allow_html=True
+)
+
+# Sidebar
+st.sidebar.header("✦ finAIguard – Settings")
+cmc_api_key = st.sidebar.text_input("Your CoinMarketCap API Key", type="password")
+crypto_symbols = st.sidebar.text_input("🪙 Crypto (comma-separated, e.g. BTC, ETH, DOGE)", "BTC,ETH")
+stock_symbols = st.sidebar.text_input("📈 Stocks (comma-separated, e.g. RELIANCE.NS, AAPL)", "RELIANCE.NS")
+n_trx = st.sidebar.slider("Simulation Trades (AI)", 100, 400, 100)
